@@ -608,12 +608,13 @@ def list_schedules(user_id: Optional[str] = None) -> List[Dict[str, Any]]:
 def list_due_schedules() -> List[Dict[str, Any]]:
     conn = get_connection()
     try:
+        now_str = datetime.now().isoformat()
         cursor = conn.cursor()
         cursor.execute("""
             SELECT * FROM schedules
             WHERE is_active = 1
-              AND (next_run_at IS NULL OR next_run_at <= CURRENT_TIMESTAMP)
-        """)
+              AND (next_run_at IS NULL OR next_run_at <= ?)
+        """, (now_str,))
         rows = cursor.fetchall()
         results = []
         for r in rows:
