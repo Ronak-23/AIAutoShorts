@@ -8,7 +8,7 @@ graceful fallbacks to dictionary configs.
 
 import os
 import re
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 from config.settings import OUTPUT_DIR, THUMBNAIL_DIR, LOG_DIR
 from core.db.repository import get_channel_by_name, get_channel_by_id, list_channels
 
