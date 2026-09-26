@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  aiautoshorts:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aiautoshorts
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      # Mount SQLite database directory to persist data across container restarts
+      - ./data:/app/data
+      # Mount output folder to persist generated videos, thumbnails, and logs
+      - ./output:/app/output
+      # Mount config folder for persistent channel customizations and credentials
+      - ./config:/app/config
+    environment:
+      - PYTHONUNBUFFERED=1
+      # Set to true on CPU instances to save RAM, or false if you want CLIP semantic verification
+      - SKIP_CLIP_VALIDATION=false
+      - MIN_DISK_SPACE_GB=2.0

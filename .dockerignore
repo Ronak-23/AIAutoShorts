@@ -1,0 +1,27 @@
+# Python virtual environments & caches
+venv/
+.venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Git & IDE
+.git/
+.gitignore
+.vscode/
+.idea/
+
+# Local credentials & environment files (mounted or injected on host)
+.env
+.env.*
+
+# Output video data & logs (mounted via Docker volume)
+output/videos/
+output/thumbnails/
+output/logs/
+data/aiautoshorts.db*
+
+# UI dev dependencies
+node_modules/

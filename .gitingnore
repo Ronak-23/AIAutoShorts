@@ -1,0 +1,15 @@
+# Environment & Secrets
+.env
+config/youtube_client_secrets.json
+config/gcp-credentials.json
+
+# OAuth Tokens (Never commit these!)
+channels/*_token.json
+output/logs/token_*.json
+
+# SQLite database & local media
+data/*.db
+data/*.db-wal
+data/*.db-shm
+output/videos/*
+output/thumbnails/*

@@ -1,0 +1,3 @@
+"""
+AIAutoShorts Configuration Package
+"""

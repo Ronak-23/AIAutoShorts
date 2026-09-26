@@ -1,0 +1,38 @@
+# Environment & API Keys
+.env
+.env.*
+!.env.example
+config/*.json
+!config/bgm_discovery.json
+!config/phonetic_map.json
+
+# OAuth Tokens & Secrets
+channels/*
+output/logs/token_*.json
+output/logs/*.log
+
+# SQLite Database & Storage
+data/*.db
+data/*.db-wal
+data/*.db-shm
+data/*.db-journal
+
+# Rendered Media Output
+output/videos/*
+output/thumbnails/*
+!output/videos/.gitkeep
+!output/thumbnails/.gitkeep
+
+# Python & Virtualenv
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# IDE & OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

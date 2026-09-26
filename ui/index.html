@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIAutoShorts — Autonomous YouTube Shorts Production Studio</title>
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+          },
+          screens: {
+            'xs': '480px',
+          },
+          colors: {
+            // Charcoal Foundation
+            charcoal: {
+              950: '#121416',
+              900: '#171A1C', // Primary background
+              850: '#1A1E22',
+              800: '#1E2327', // Secondary background
+              700: '#252B30', // Card background
+              600: '#2D343A', // Elevated surface
+              500: '#384148', // Borders and dividers
+              400: '#4B555D',
+              300: '#77817A', // Muted text
+              200: '#A3ADA6', // Secondary text
+              100: '#F5F7F2', // Primary text
+            },
+            // Electric Lime Accents
+            lime: {
+              primary: '#B7F34A',   // Primary accent
+              secondary: '#D0FF72', // Secondary accent
+              muted: 'rgba(183, 243, 74, 0.12)',
+              dark: '#93CE2D',
+            },
+            // Brand aliased to Electric Lime
+            brand: {
+              50: '#f7fee7',
+              100: '#ecfccb',
+              200: '#d9f99d',
+              300: '#E2FFA8',
+              400: '#D0FF72',
+              500: '#B7F34A',
+              600: '#A2E234',
+              700: '#87C422',
+              900: '#365314',
+            },
+            // Surface aliased to Charcoal system
+            surface: {
+              950: '#171A1C',
+              900: '#171A1C',
+              850: '#1E2327',
+              800: '#252B30',
+              750: '#293036',
+              700: '#2D343A',
+              border: '#384148',
+            },
+            // Status system
+            status: {
+              success: '#84CC16',
+              warning: '#FBBF24',
+              error: '#F87171',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React 18 & HTM Import Map for Zero-Build Native Modular ES Modules -->
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+      "htm": "https://esm.sh/htm@3.1.1"
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg-primary: #171A1C;
+      --bg-secondary: #1E2327;
+      --bg-card: #252B30;
+      --bg-elevated: #2D343A;
+      --accent-primary: #B7F34A;
+      --accent-secondary: #D0FF72;
+      --accent-muted: rgba(183, 243, 74, 0.12);
+      --text-primary: #F5F7F2;
+      --text-secondary: #A3ADA6;
+      --text-muted: #77817A;
+      --border-subtle: #384148;
+      --success: #84CC16;
+      --warning: #FBBF24;
+      --error: #F87171;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    ::selection {
+      background-color: #B7F34A;
+      color: #171A1C;
+    }
+
+    @keyframes tech-pulse {
+      0%, 100% {
+        border-color: rgba(183, 243, 74, 0.5);
+        background-color: rgba(183, 243, 74, 0.05);
+      }
+      50% {
+        border-color: rgba(183, 243, 74, 0.95);
+        background-color: rgba(183, 243, 74, 0.12);
+      }
+    }
+
+    @keyframes dash {
+      to {
+        stroke-dashoffset: -20;
+      }
+    }
+
+    .node-running {
+      animation: tech-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      border-color: #B7F34A !important;
+    }
+
+    .animated-edge {
+      stroke-dasharray: 6;
+      animation: dash 1s linear infinite;
+    }
+
+    /* Crisp Technical Scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #171A1C; }
+    ::-webkit-scrollbar-thumb { background: #2D343A; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #384148; }
+  </style>
+
+  <script>
+    // Fail-safe global diagnostic handler: catches any bootstrap errors before or during React mounting
+    window.addEventListener('error', function (e) {
+      console.error('[AIAutoShorts Global Error]', e);
+      const root = document.getElementById('root');
+      if (root && (!root.innerHTML || root.innerHTML.trim() === '')) {
+        root.innerHTML = `
+          <div style="min-height: 100vh; background-color: #171A1C; color: #F5F7F2; display: flex; align-items: center; justify-content: center; padding: 2rem; font-family: 'Inter', system-ui, sans-serif;">
+            <div style="max-width: 520px; width: 100%; background: #1E2327; border: 1px solid #384148; border-radius: 0.75rem; padding: 2rem; text-align: center;">
+              <div style="width: 44px; height: 44px; background: rgba(248,113,113,0.15); border: 1px solid rgba(248,113,113,0.3); border-radius: 0.5rem; color: #F87171; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem auto; font-size: 20px; font-weight: bold;">!</div>
+              <h2 style="font-size: 1.15rem; font-weight: 700; color: #F5F7F2; margin-bottom: 0.5rem;">AIAutoShorts Studio Error</h2>
+              <p style="font-size: 0.825rem; color: #A3ADA6; margin-bottom: 1.25rem; line-height: 1.5;">An unexpected script error occurred while loading the studio interface.</p>
+              <div style="background: #171A1C; border: 1px solid #384148; border-radius: 0.5rem; padding: 0.875rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #F87171; text-align: left; overflow-x: auto; max-height: 140px; margin-bottom: 1.5rem;">
+                ${e.message || (e.error ? e.error.stack : String(e))}
+              </div>
+              <div style="display: flex; gap: 0.75rem; justify-content: center;">
+                <button onclick="localStorage.clear(); sessionStorage.clear(); window.location.href = '/?t=' + Date.now();" style="background: #B7F34A; color: #171A1C; border: none; border-radius: 0.5rem; padding: 0.65rem 1.25rem; font-size: 0.8rem; font-weight: 700; cursor: pointer; transition: all 0.15s;">
+                  Clear Cache & Full Reload
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    });
+  </script>
+</head>
+<body class="bg-charcoal-900 text-charcoal-100 min-h-screen flex flex-col font-sans selection:bg-lime-primary selection:text-charcoal-900 antialiased">
+  <div id="root" class="flex-1 flex flex-col"></div>
+  <script type="module" src="/static/src/main.js?v=2.2.0"></script>
+</body>
+</html>
